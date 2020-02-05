@@ -37,12 +37,11 @@ In the example below, we have a one-dimensional array of intensity data. Most gr
 import otsu from 'otsu';
 
 const intensity = [255, 0, 128, 4, 95 ...];
-
-const t = otsu(image);
+const t = otsu(intensity);
 
 console.log(t); // i.e. 128
 
-const bw = image.map(e => (e > t ? 1 : 0));
+const thresholded = intensity.map(e => (e > t ? 1 : 0));
 ```
 
 ## ✌️ License
