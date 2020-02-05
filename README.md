@@ -11,4 +11,4 @@ http://www.labbookpages.co.uk/software/imgProc/files/otsuOrig.png
 
 great description http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html
 
-
+https://github.com/hipersayanX

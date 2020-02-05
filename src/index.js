@@ -1,7 +1,6 @@
 import compose from 'rippleware';
 
-// not image, just *data*; we should be able to compute an otsu of *anything*
-const histogram = (data, bins) => data
+const histo = (data, bins) => data
   .reduce(
     (arr, e) => {
       arr[bins.indexOf(e)] += 1;
@@ -11,19 +10,40 @@ const histogram = (data, bins) => data
       .fill(0),
   );
 
-// TODO: Determine number of classes. How should this be passed?
-// TODO: What is controled by the number of classes?
-const otsu = (data, n = 2) => {
-  const bins = Array
-    .from(new Set(data))
-    .sort((e0, e1) => (e0 - e1)); // lowest-to-highest
-  const hist = histogram(data, bins);
+const width = histogram => histogram.reduce((e, i) => (e + i), 0);
 
-  console.log(bins);
-  console.log(hist);
+const bins = data => Array
+  .from(new Set(data))
+  .sort((e0, e1) => (e0 - e1));
+
+const weight = (data, total) => data
+  .reduce((e, i) => (e + i), 0) / total;
+
+const mean = (histogram, bins) => histogram.reduce((r, e, i) => r + (e * bins[i]), 0) / width(histogram);
+
+const variance = (histogram, bins, mean) => histogram.reduce((r, e, i) => r + ((bins[i] - mean) * (bins[i] - mean)) * e, 0) / width(histogram);
+
+const props = (hf, bf, total) => [
+  weight(hf, total),
+  variance(hf, bf, mean(hf, bf)),
+];
+
+const cross = (wb, vb, wf, vf) => wb * vb + wf * vf;
+
+const otsu = (data) => {
+  const b = bins(data);
+  const h = histo(data, b);
+  const { length: total } = data;
+  const vars = [...Array(b.length)]
+    .map(
+      (_, i) => {
+        const [wb, vb] = props(h.slice(0, i), b.slice(0, i), total);
+        const [wf, vf] = props(h.slice(i, h.length), b.slice(i, h.length), total);
+        const x = cross(wb, vb, wf, vf);
+        return !isNaN(x) ? x : Number.POSITIVE_INFINITY;
+      },
+    );
+  return b[vars.indexOf(Math.min(...vars))];
 };
 
-export default compose()
-  .use(
-    '[Number]', data => otsu(data),
-  );
+export default compose().use('[Number]', data => otsu(data));
