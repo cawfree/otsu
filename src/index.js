@@ -6,25 +6,47 @@ const histo = (data, bins) =>
     return arr;
   }, [...Array(bins.length)].fill(0));
 
-const width = histogram => histogram.reduce((e, i) => e + i, 0);
+const width = (hist, s, e) => {
+  let v = 0;
+  for (let i = s; i < e; i += 1) {
+    v += hist[i];
+  }
+  return v;
+};
 
 const bins = data => Array.from(new Set(data)).sort((e0, e1) => e0 - e1);
 
-const weight = (data, total) => data.reduce((e, i) => e + i, 0) / total;
+const weight = (hist, s, e, total) => {
+  let v = 0;
+  for (let i = s; i < e; i += 1) {
+    v += hist[i];
+  }
+  return v / total;
+};
 
-const mean = (histogram, bins) =>
-  histogram.reduce((r, e, i) => r + e * bins[i], 0) / width(histogram);
+const mean = (hist, bins, s, e, width) => {
+  let v = 0;
+  for (let i = s; i < e; i += 1) {
+    v += hist[i] * bins[i];
+  }
+  return v * width;
+};
 
-const variance = (histogram, bins, mean) =>
+const variance = (histogram, bins, mean, width) =>
   histogram.reduce(
     (r, e, i) => r + (bins[i] - mean) * (bins[i] - mean) * e,
     0
-  ) / width(histogram);
+  ) * width;
 
-const props = (hf, bf, total) => [
-  weight(hf, total),
-  variance(hf, bf, mean(hf, bf))
-];
+const props = (hist, bins, s, e, total) => {
+  const w = 1 / width(hist, s, e);
+  const hf = hist.slice(s, e);
+  const bf = bins.slice(s, e);
+  return [
+    weight(hist, s, e, total),
+    variance(hf, bf, mean(hist, bins, s, e, w), w),
+  ];
+};
 
 const cross = (wb, vb, wf, vf) => wb * vb + wf * vf;
 
@@ -33,8 +55,8 @@ const otsu = data => {
   const h = histo(data, b);
   const { length: total } = data;
   const vars = [...Array(b.length)].map((_, i) => {
-    const [wb, vb] = props(h.slice(0, i), b.slice(0, i), total);
-    const [wf, vf] = props(h.slice(i, h.length), b.slice(i, h.length), total);
+    const [wb, vb] = props(h, b, 0, i, total);
+    const [wf, vf] = props(h, b, i, h.length, total);
     const x = cross(wb, vb, wf, vf);
     return !isNaN(x) ? x : Number.POSITIVE_INFINITY;
   });
