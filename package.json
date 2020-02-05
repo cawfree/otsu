@@ -1,6 +1,6 @@
 {
   "name": "otsu",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "✂️ Otsu's Method for automated thresholding in JavaScript.",
   "main": "dist",
   "keywords": [
