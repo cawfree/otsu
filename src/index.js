@@ -51,7 +51,7 @@ const props = (hist, bins, s, e, total) => {
 
 const cross = (wb, vb, wf, vf) => wb * vb + wf * vf;
 
-const otsu = data => {
+export default data => {
   const b = bins(data);
   const h = histo(data, b);
   const { length: total } = data;
@@ -76,11 +76,4 @@ const otsu = data => {
   });
 
   return b[vars.indexOf(Math.min(...vars))];
-};
-
-export default data => {
-  if (typeCheck("[Number]", data)) {
-    return otsu(data);
-  }
-  throw new Error(`Expected numeric array data, encountered ${data}.`);
 };
