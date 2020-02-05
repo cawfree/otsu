@@ -30,6 +30,6 @@
     "uglify-js": "^3.7.7"
   },
   "dependencies": {
-    "rippleware": "^0.0.9"
+    "type-check": "^0.3.2"
   }
 }

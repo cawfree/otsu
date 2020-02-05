@@ -792,6 +792,5 @@ it("should be capable of using otsu's method for image segmentation", () => {
 
   const t = otsu(image);
 
-  expect(otsu(image))
-    .toEqual(114);
+  expect(otsu(image)).toEqual(114);
 });
