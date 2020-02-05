@@ -1,5 +1,3 @@
-import { typeCheck } from "type-check";
-
 const histo = (data, bins) =>
   data.reduce((arr, e) => {
     arr[bins.indexOf(e)] += 1;
@@ -39,14 +37,6 @@ const variance = (hist, bins, s, e, mean, width) => {
     v += d * d * hist[i];
   }
   return v * width;
-};
-
-const props = (hist, bins, s, e, total) => {
-  const w = 1 / width(hist, s, e);
-  return [
-    weight(hist, s, e, total),
-    variance(hist, bins, s, e, mean(hist, bins, s, e, w), w)
-  ];
 };
 
 const cross = (wb, vb, wf, vf) => wb * vb + wf * vf;

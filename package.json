@@ -1,6 +1,6 @@
 {
   "name": "otsu",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "✂️ Otsu's Method for automated thresholding in JavaScript.",
   "main": "dist",
   "keywords": [
@@ -29,7 +29,5 @@
     "prettier": "^1.19.1",
     "uglify-js": "^3.7.7"
   },
-  "dependencies": {
-    "type-check": "^0.3.2"
-  }
+  "dependencies": {}
 }
