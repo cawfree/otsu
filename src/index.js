@@ -32,19 +32,20 @@ const mean = (hist, bins, s, e, width) => {
   return v * width;
 };
 
-const variance = (histogram, bins, mean, width) =>
-  histogram.reduce(
-    (r, e, i) => r + (bins[i] - mean) * (bins[i] - mean) * e,
-    0
-  ) * width;
+const variance = (hist, bins, s, e, mean, width) => {
+  let v = 0;
+  for (let i = s; i < e; i += 1) {
+    const d = bins[i] - mean;
+    v += d * d * hist[i];
+  }
+  return v * width;
+};
 
 const props = (hist, bins, s, e, total) => {
   const w = 1 / width(hist, s, e);
-  const hf = hist.slice(s, e);
-  const bf = bins.slice(s, e);
   return [
     weight(hist, s, e, total),
-    variance(hf, bf, mean(hist, bins, s, e, w), w),
+    variance(hist, bins, s, e, mean(hist, bins, s, e, w), w),
   ];
 };
 
