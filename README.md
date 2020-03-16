@@ -1,5 +1,5 @@
 # otsu
-[Otsu's Method](https://en.wikipedia.org/wiki/Thresholding_(image_processing)) is way of implementing automatic thresholding. It is a binarization algorithm which can be used to select the optimal threshold between foreground and background quantities based on finding the minimum point of [cross variance](). This is particularly useful when performing segmentation in [image processing]().
+[Otsu's Method](https://en.wikipedia.org/wiki/Otsu%27s_method) is way of implementing automatic thresholding. It is a binarization algorithm which can be used to select the optimal threshold between foreground and background quantities based on finding the minimum point of cross variance. This is particularly useful when performing segmentation in [image processing](https://en.wikipedia.org/wiki/Digital_image_processing).
 
 <a href="#badge">
     <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
@@ -16,13 +16,13 @@ You can find an awesome description of the algorithm, which inspired this reposi
 
 ## 🚀 Getting Started
 
-Using [`npm`]():
+Using [`npm`](https://www.npmjs.com/):
 
 ```bash
 npm install --save otsu
 ```
 
-Using [`yarn`]():
+Using [`yarn`](https://yarnpkg.com/):
 
 ```bash
 yarn add otsu
