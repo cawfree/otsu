@@ -2,7 +2,8 @@
   "name": "otsu",
   "version": "0.0.5",
   "description": "✂️ Otsu's Method for automated thresholding in JavaScript.",
-  "main": "dist",
+  "main": "./dist/index.js",
+  "type": "module",
   "keywords": [
     "image",
     "processing",
